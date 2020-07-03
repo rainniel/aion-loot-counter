@@ -9,9 +9,11 @@ Loot counter for group instance specifically designed for Sauro Supply Base (Aio
 5. Click the **Copy Text** button to copy the loots records and paste it in-game chat to share it to your group
 
 **Notes:**
-- This loot counter does not read chat log, you have to manually count the loots in app.
-- If you were less than 6 people in the group, just leave the other row empty.
-- The Mythic is not included in the copied text.
+- Aion must be in window mode
+- The app is always on top of the screen
+- This loot counter does not read chat log, you have to manually count the loots in app
+- If you were less than 6 people in the group, just leave the other row empty
+- The Mythic is not included in the copied text
 
 I'm already developing a version 2 for this on my free time, it's more better, I'll publish it soon here.
 
