@@ -1,0 +1,78 @@
+﻿<Window x:Class="AionLootCounter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AionLootCounter"
+        mc:Ignorable="d"
+        Title="Loot Counter" Height="290" Width="310" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="#d9d9d9" MouseDown="Window_MouseDown" MouseLeave="Window_MouseLeave" MouseEnter="Window_MouseEnter" ResizeMode="NoResize">
+    <Grid Margin="1" Background="White">
+
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left" Height="20">
+            <Label Content="Loot Counter" Padding="4,2,0,0" FontWeight="Bold"/>
+        </DockPanel>
+
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Right" Height="20" Margin="0,0,1,0">
+
+            <Button x:Name="BtnPin" Style="{StaticResource HeadingButtonStyle}" Click="BtnPin_Click">
+                <Path x:Name="PthPin" Stretch="Fill" Margin="4, 3" Fill="Black" Data="{StaticResource PinGeometry}"/>
+                <Button.ToolTip>
+                    <TextBlock>Pin/Unpin window on top of the screen</TextBlock>
+                </Button.ToolTip>
+            </Button>
+
+            <Button x:Name="BtnMinimize" Style="{StaticResource HeadingButtonStyle}" Click="BtnMinimize_Click">
+                <Path Stretch="Fill" Margin="4, 7" Fill="Black" Data="{StaticResource MinimizeGeometry}"/>
+                <Button.ToolTip>
+                    <TextBlock>Minimize</TextBlock>
+                </Button.ToolTip>
+            </Button>
+
+            <Button x:Name="BtnClose" Style="{StaticResource HeadingButtonStyle}" Click="BtnClose_Click">
+                <Path Stretch="Fill" Margin="4" Fill="Black" Data="{StaticResource CloseGeometry}"/>
+                <Button.ToolTip>
+                    <TextBlock>Close</TextBlock>
+                </Button.ToolTip>
+            </Button>
+
+        </DockPanel>
+
+        <StackPanel Margin="0,25,0,0">
+
+            <StackPanel Orientation="Horizontal" Height="20" HorizontalAlignment="Center">
+                <Label Content="Name" Padding="0" VerticalContentAlignment="Center" Width="100" Margin="0,0,5,0"/>
+                <Label Content="Bag" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
+                <Label Content="Yellow" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
+                <Label Content="Eternal" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
+                <Label Content="Mythic" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40"/>
+            </StackPanel>
+
+            <local:PlayerLootControl x:Name="Player1" HorizontalAlignment="Center"/>
+            <local:PlayerLootControl x:Name="Player2" HorizontalAlignment="Center"/>
+            <local:PlayerLootControl x:Name="Player3" HorizontalAlignment="Center"/>
+            <local:PlayerLootControl x:Name="Player4" HorizontalAlignment="Center"/>
+            <local:PlayerLootControl x:Name="Player5" HorizontalAlignment="Center"/>
+            <local:PlayerLootControl x:Name="Player6" HorizontalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal" Height="16" HorizontalAlignment="Center">
+                <Label Content="Total" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100" FontWeight="Bold" Margin="0,0,5,0"/>
+                <Label x:Name="LblTotalBag" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=Bag}" Margin="0,0,5,0"/>
+                <Label x:Name="LblTotalYellow" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=Yellow}" Margin="0,0,5,0"/>
+                <Label x:Name="LblTotalEternal" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=Eternal}" Margin="0,0,5,0"/>
+                <Label x:Name="LblTotalMythic" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=Mythic}"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="14">
+            <Button x:Name="BtnCopyText" Content="Copy Text" Width="120" Height="25" Click="BtnCopyText_Click"/>
+        </DockPanel>
+
+        <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="14">
+            <Button x:Name="BtnClearAll" Content="Clear All" Width="120" Height="25" Click="BtnClearAll_Click"/>
+        </DockPanel>
+
+    </Grid>
+
+</Window>
+    
