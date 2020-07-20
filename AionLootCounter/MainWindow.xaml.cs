@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using AionLootCounter.Windows;
 
 namespace AionLootCounter
 {
@@ -12,8 +13,7 @@ namespace AionLootCounter
 
         private bool lockOpacity = false;
 
-        private bool CountBag = true;
-        private bool CountMythic = false;
+        private AppSettings settings = new AppSettings();
 
         public MainWindow()
         {
@@ -32,8 +32,79 @@ namespace AionLootCounter
             Player5.EnterPressed += Player5_EnterPressed;
             Player6.EnterPressed += Player6_EnterPressed;
 
-            Player6.PlayerName = "ME";
+            ApplySettings();
+            ShowMe();
 
+        }
+
+        private void ApplySettings()
+        {
+
+            Player3.Visibility = settings.GroupMembers >= 3 ? Visibility.Visible : Visibility.Collapsed;
+            Player4.Visibility = settings.GroupMembers >= 4 ? Visibility.Visible : Visibility.Collapsed;
+            Player5.Visibility = settings.GroupMembers >= 5 ? Visibility.Visible : Visibility.Collapsed;
+            Player6.Visibility = settings.GroupMembers >= 6 ? Visibility.Visible : Visibility.Collapsed;
+
+            if (Player3.Visibility != Visibility.Visible) Player3.Clear();
+            if (Player4.Visibility != Visibility.Visible) Player4.Clear();
+            if (Player5.Visibility != Visibility.Visible) Player5.Clear();
+            if (Player6.Visibility != Visibility.Visible) Player6.Clear();
+
+            Player1.ShowBag = settings.ShowBag;
+            Player2.ShowBag = settings.ShowBag;
+            Player3.ShowBag = settings.ShowBag;
+            Player4.ShowBag = settings.ShowBag;
+            Player5.ShowBag = settings.ShowBag;
+            Player6.ShowBag = settings.ShowBag;
+            Player1.ShowMythic = settings.ShowMythic;
+            Player2.ShowMythic = settings.ShowMythic;
+            Player3.ShowMythic = settings.ShowMythic;
+            Player4.ShowMythic = settings.ShowMythic;
+            Player5.ShowMythic = settings.ShowMythic;
+            Player6.ShowMythic = settings.ShowMythic;
+
+            Player1.CountBag = settings.CopyBag;
+            Player2.CountBag = settings.CopyBag;
+            Player3.CountBag = settings.CopyBag;
+            Player4.CountBag = settings.CopyBag;
+            Player5.CountBag = settings.CopyBag;
+            Player6.CountBag = settings.CopyBag;
+            Player1.CountMythic = settings.CopyMythic;
+            Player2.CountMythic = settings.CopyMythic;
+            Player3.CountMythic = settings.CopyMythic;
+            Player4.CountMythic = settings.CopyMythic;
+            Player5.CountMythic = settings.CopyMythic;
+            Player6.CountMythic = settings.CopyMythic;
+
+            LblBag.Visibility = settings.ShowBag ? Visibility.Visible : Visibility.Collapsed;
+            LblMythic.Visibility = settings.ShowMythic ? Visibility.Visible : Visibility.Collapsed;
+            LblTotalBag.Visibility = settings.ShowBag ? Visibility.Visible : Visibility.Collapsed;
+            LblTotalMythic.Visibility = settings.ShowMythic ? Visibility.Visible : Visibility.Collapsed;
+
+            int width = 310;
+            int height = 285;
+
+            if (!settings.ShowBag) width -= 45;
+            if (!settings.ShowMythic) width -= 45;
+
+            int hiddenPlayer = 6 - settings.GroupMembers;
+            if (hiddenPlayer > 0) height -= (30 * hiddenPlayer);
+
+            Width = width;
+            Height = height;
+
+        }
+
+        private void ShowMe()
+        {
+            switch (settings.GroupMembers)
+            {
+                case 2: Player2.PlayerName = "ME"; break;
+                case 3: Player3.PlayerName = "ME"; break;
+                case 4: Player4.PlayerName = "ME"; break;
+                case 5: Player5.PlayerName = "ME"; break;
+                case 6: Player6.PlayerName = "ME"; break;
+            }
         }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
@@ -43,7 +114,7 @@ namespace AionLootCounter
 
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (Topmost && !lockOpacity) Opacity = 0.5;
+            if (Topmost & lockOpacity == false) Opacity = 0.5;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -123,24 +194,24 @@ namespace AionLootCounter
         {
 
             List<string> lootNames = new List<string>();
-            if (CountBag) lootNames.Add("Bag");
+            if (settings.ShowBag & settings.CopyBag) lootNames.Add("Bag");
             lootNames.Add("Yellow");
             lootNames.Add("Eternal");
-            if (CountMythic) lootNames.Add("Mythic");
+            if (settings.ShowMythic & settings.CopyMythic) lootNames.Add("Mythic");
 
             List<string> playerLoots = new List<string>();
-            if (Player1.HasName) playerLoots.Add(Player1.GetText());
-            if (Player2.HasName) playerLoots.Add(Player2.GetText());
-            if (Player3.HasName) playerLoots.Add(Player3.GetText());
-            if (Player4.HasName) playerLoots.Add(Player4.GetText());
-            if (Player5.HasName) playerLoots.Add(Player5.GetText());
-            if (Player6.HasName) playerLoots.Add(Player6.GetText());
+            if (Player1.Include) playerLoots.Add(Player1.GetText());
+            if (Player2.Include) playerLoots.Add(Player2.GetText());
+            if (Player3.Include) playerLoots.Add(Player3.GetText());
+            if (Player4.Include) playerLoots.Add(Player4.GetText());
+            if (Player5.Include) playerLoots.Add(Player5.GetText());
+            if (Player6.Include) playerLoots.Add(Player6.GetText());
 
             List<int> totalLoots = new List<int>();
-            if (CountBag) totalLoots.Add(Player1.Bag + Player2.Bag + Player3.Bag + Player4.Bag + Player5.Bag + Player6.Bag);
+            if (settings.ShowBag & settings.CopyBag) totalLoots.Add(Player1.Bag + Player2.Bag + Player3.Bag + Player4.Bag + Player5.Bag + Player6.Bag);
             totalLoots.Add(Player1.Yellow + Player2.Yellow + Player3.Yellow + Player4.Yellow + Player5.Yellow + Player6.Yellow);
             totalLoots.Add(Player1.Eternal + Player2.Eternal + Player3.Eternal + Player4.Eternal + Player5.Eternal + Player6.Eternal);
-            if (CountMythic) totalLoots.Add(Player1.Mythic + Player2.Mythic + Player3.Mythic + Player4.Mythic + Player5.Mythic + Player6.Mythic);
+            if (settings.ShowMythic & settings.CopyMythic) totalLoots.Add(Player1.Mythic + Player2.Mythic + Player3.Mythic + Player4.Mythic + Player5.Mythic + Player6.Mythic);
             playerLoots.Add("All loots " + string.Join("/", totalLoots));
 
             Clipboard.Clear();
@@ -150,8 +221,9 @@ namespace AionLootCounter
 
         private void BtnClearAll_Click(object sender, RoutedEventArgs e)
         {
+
             lockOpacity = true;
-            if (MessageBoxEx.Show(this, "Clear all values?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (new MessageBoxWindow(this, "Clear all values?", "", MessageBoxButton.YesNo).ShowDialog() == true)
             {
                 Player1.Clear();
                 Player2.Clear();
@@ -159,9 +231,29 @@ namespace AionLootCounter
                 Player4.Clear();
                 Player5.Clear();
                 Player6.Clear();
-                Player6.PlayerName = "ME";
+                ShowMe();
             }
             lockOpacity = false;
+
+        }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+            SettingsWindow settingsWindow = new SettingsWindow(settings);
+            settingsWindow.Owner = GetWindow(this);
+
+            lockOpacity = true;
+            if (settingsWindow.ShowDialog() == true)
+            {
+                if (settingsWindow.Settings != null)
+                {
+                    settings = settingsWindow.Settings;
+                    ApplySettings();
+                }
+            }
+            lockOpacity = false;
+
         }
 
     }

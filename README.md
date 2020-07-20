@@ -1,7 +1,9 @@
-## aion-loot-counter v2
+## aion-loot-counter v2.1
+
 Loot counter for group instance specifically designed for Sauro Supply Base (Aion 4.6) but can be useful too for other instances.
 
 **How to use:**
+
 1. Download the **AionLootCounter.exe** in the repository
 2. Open the downloaded app
 3. Put the group member names in each **Name** fields
@@ -9,16 +11,15 @@ Loot counter for group instance specifically designed for Sauro Supply Base (Aio
 5. Click the **Copy Text** button to copy the loots record and paste it in-game chat to share it to your group
 
 **Notes:**
+
 - Aion must be in window mode
 - This loot counter does not read chat log, you have to manually count the loots in app
-- If you were less than 6 people in the group, just leave the other name row empty
-- Mythic is not included in the copied text
 
-**What's new in version 2:**
-- Slimmer interface
-- Added icon
-- Added pin/unpin on top of the screen button
-- App will turn 50% transparent when pinned and not in focus
+**What's new in version 2.1:**
+
+- Added settings
+- Added option to show/hide and copy Bag and Mythic
+- Added option to set visible number of Player Names
 
 Made by Uuwulu of EuroAion
 

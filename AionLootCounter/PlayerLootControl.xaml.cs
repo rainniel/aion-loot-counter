@@ -14,8 +14,8 @@ namespace AionLootCounter
         private Dictionary<string, int> itemValues = new Dictionary<string, int>();
         private bool updating = false;
 
-        public bool countBag = true;
-        public bool countMythic = false;
+        private bool countBag = true;
+        private bool countMythic = false;
 
         public event EventHandler ValueChanged;
         public event EventHandler EnterPressed;
@@ -30,6 +30,24 @@ namespace AionLootCounter
         }
 
         #region "UI Events"
+
+        private void TbxName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TbxName.Text))
+            {
+                TbxBag.IsEnabled = false;
+                TbxYellow.IsEnabled = false;
+                TbxEternal.IsEnabled = false;
+                TbxMythic.IsEnabled = false;
+            }
+            else
+            {
+                TbxBag.IsEnabled = true;
+                TbxYellow.IsEnabled = true;
+                TbxEternal.IsEnabled = true;
+                TbxMythic.IsEnabled = true;
+            }
+        }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -53,8 +71,7 @@ namespace AionLootCounter
             if (!updating)
             {
                 TextBox tbx = (TextBox)sender;
-                int.TryParse(tbx.Text, out int val);
-                itemValues[tbx.Name] = val;
+                itemValues[tbx.Name] = Helper.GetInt(tbx.Text);
                 UpdateNameFont();
             }
         }
@@ -64,6 +81,7 @@ namespace AionLootCounter
 
             if (e.Key == Key.Up || e.Key == Key.Down)
             {
+
                 TextBox tbx = (TextBox)sender;
                 int val = itemValues[tbx.Name];
 
@@ -83,6 +101,7 @@ namespace AionLootCounter
                 else tbx.Clear();
                 updating = false;
                 UpdateNameFont();
+
             }
 
         }
@@ -102,15 +121,34 @@ namespace AionLootCounter
 
         #region "Misc"
 
+        private void UpdateWidth()
+        {
+            int width = 286;
+            if (ShowBag == false) width -= 45;
+            if (ShowMythic == false) width -= 45;
+            Width = width;
+        }
+
         public string PlayerName
         {
             get { return TbxName.Text.Trim(); }
             set { TbxName.Text = value.Trim(); }
         }
 
+        public bool ShowBag
+        {
+            get { return TbxBag.Visibility == Visibility.Visible; }
+            set
+            {
+                if (value) TbxBag.Visibility = Visibility.Visible;
+                else TbxBag.Visibility = Visibility.Collapsed;
+                UpdateWidth();
+            }
+        }
+
         public bool CountBag
         {
-            get { return countBag; }
+            get { return ShowBag & countBag; }
             set
             {
                 countBag = value;
@@ -118,9 +156,20 @@ namespace AionLootCounter
             }
         }
 
+        public bool ShowMythic
+        {
+            get { return TbxMythic.Visibility == Visibility.Visible; }
+            set
+            {
+                if (value) TbxMythic.Visibility = Visibility.Visible;
+                else TbxMythic.Visibility = Visibility.Collapsed;
+                UpdateWidth();
+            }
+        }
+
         public bool CountMythic
         {
-            get { return countMythic; }
+            get { return ShowMythic & countMythic; }
             set
             {
                 countMythic = value;
@@ -131,32 +180,32 @@ namespace AionLootCounter
         public int Bag
         {
             get { return Helper.GetInt(TbxBag.Text); }
-            set { TbxBag.Text = value.ToString(); ; }
+            set { TbxBag.Text = value.ToString(); }
         }
 
         public int Yellow
         {
             get { return Helper.GetInt(TbxYellow.Text); }
-            set { TbxYellow.Text = value.ToString(); ; }
+            set { TbxYellow.Text = value.ToString(); }
         }
 
         public int Eternal
         {
             get { return Helper.GetInt(TbxEternal.Text); }
-            set { TbxEternal.Text = value.ToString(); ; }
+            set { TbxEternal.Text = value.ToString(); }
         }
 
         public int Mythic
         {
             get { return Helper.GetInt(TbxMythic.Text); }
-            set { TbxMythic.Text = value.ToString(); ; }
+            set { TbxMythic.Text = value.ToString(); }
         }
 
-        public bool HasName
+        public bool Include
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(TbxName.Text);
+                return Visibility == Visibility.Visible & string.IsNullOrWhiteSpace(TbxName.Text) == false;
             }
         }
 
@@ -165,8 +214,8 @@ namespace AionLootCounter
             get
             {
                 int loots = Yellow + Eternal;
-                if (countBag) loots += Bag;
-                if (countMythic) loots += Mythic;
+                if (CountBag) loots += Bag;
+                if (CountMythic) loots += Mythic;
                 return loots > 0;
             }
         }
@@ -177,10 +226,10 @@ namespace AionLootCounter
             if (HasLoot)
             {
                 List<int> loots = new List<int>();
-                if (countBag) loots.Add(Bag);
+                if (CountBag) loots.Add(Bag);
                 loots.Add(Yellow);
                 loots.Add(Eternal);
-                if (countMythic) loots.Add(Mythic);
+                if (CountMythic) loots.Add(Mythic);
                 output += string.Join("/", loots);
             }
             else output += "none";
