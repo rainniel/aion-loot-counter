@@ -42,7 +42,7 @@
             <StackPanel Orientation="Horizontal" Height="20" HorizontalAlignment="Center">
                 <Label Content="Name" Padding="0" VerticalContentAlignment="Center" Width="100" Margin="0,0,5,0"/>
                 <Label x:Name="LblBag" Content="Bag" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
-                <Label Content="Yellow" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
+                <Label Content="Gold" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
                 <Label Content="Eternal" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" Margin="0,0,5,0"/>
                 <Label x:Name="LblMythic" Content="Mythic" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40"/>
             </StackPanel>
@@ -57,7 +57,7 @@
             <StackPanel Orientation="Horizontal" Height="16" HorizontalAlignment="Center">
                 <Label Content="Total" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100" FontWeight="Bold" Margin="0,0,5,0"/>
                 <Label x:Name="LblTotalBag" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=BagColor}" Margin="0,0,5,0"/>
-                <Label x:Name="LblTotalYellow" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=YellowColor}" Margin="0,0,5,0"/>
+                <Label x:Name="LblTotalGold" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=GoldColor}" Margin="0,0,5,0"/>
                 <Label x:Name="LblTotalEternal" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=EternalColor}" Margin="0,0,5,0"/>
                 <Label x:Name="LblTotalMythic" Content="" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=MythicColor}"/>
             </StackPanel>

@@ -24,7 +24,7 @@ namespace AionLootCounter
         {
             InitializeComponent();
             itemValues.Add(TbxBag.Name, 0);
-            itemValues.Add(TbxYellow.Name, 0);
+            itemValues.Add(TbxGold.Name, 0);
             itemValues.Add(TbxEternal.Name, 0);
             itemValues.Add(TbxMythic.Name, 0);
         }
@@ -36,14 +36,14 @@ namespace AionLootCounter
             if (string.IsNullOrWhiteSpace(TbxName.Text))
             {
                 TbxBag.IsEnabled = false;
-                TbxYellow.IsEnabled = false;
+                TbxGold.IsEnabled = false;
                 TbxEternal.IsEnabled = false;
                 TbxMythic.IsEnabled = false;
             }
             else
             {
                 TbxBag.IsEnabled = true;
-                TbxYellow.IsEnabled = true;
+                TbxGold.IsEnabled = true;
                 TbxEternal.IsEnabled = true;
                 TbxMythic.IsEnabled = true;
             }
@@ -183,10 +183,10 @@ namespace AionLootCounter
             set { TbxBag.Text = value.ToString(); }
         }
 
-        public int Yellow
+        public int Gold
         {
-            get { return Helper.GetInt(TbxYellow.Text); }
-            set { TbxYellow.Text = value.ToString(); }
+            get { return Helper.GetInt(TbxGold.Text); }
+            set { TbxGold.Text = value.ToString(); }
         }
 
         public int Eternal
@@ -213,7 +213,7 @@ namespace AionLootCounter
         {
             get
             {
-                int loots = Yellow + Eternal;
+                int loots = Gold + Eternal;
                 if (CountBag) loots += Bag;
                 if (CountMythic) loots += Mythic;
                 return loots > 0;
@@ -227,7 +227,7 @@ namespace AionLootCounter
             {
                 List<int> loots = new List<int>();
                 if (CountBag) loots.Add(Bag);
-                loots.Add(Yellow);
+                loots.Add(Gold);
                 loots.Add(Eternal);
                 if (CountMythic) loots.Add(Mythic);
                 output += string.Join("/", loots);
@@ -240,7 +240,7 @@ namespace AionLootCounter
         {
             TbxName.Clear();
             TbxBag.Clear();
-            TbxYellow.Clear();
+            TbxGold.Clear();
             TbxEternal.Clear();
             TbxMythic.Clear();
         }

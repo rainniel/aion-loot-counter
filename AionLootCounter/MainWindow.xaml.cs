@@ -181,11 +181,11 @@ namespace AionLootCounter
         private void ValueChanged(object sender, EventArgs e)
         {
             int totalBag = Player1.Bag + Player2.Bag + Player3.Bag + Player4.Bag + Player5.Bag + Player6.Bag;
-            int totalYellow = Player1.Yellow + Player2.Yellow + Player3.Yellow + Player4.Yellow + Player5.Yellow + Player6.Yellow;
+            int totalGold = Player1.Gold + Player2.Gold + Player3.Gold + Player4.Gold + Player5.Gold + Player6.Gold;
             int totalEternal = Player1.Eternal + Player2.Eternal + Player3.Eternal + Player4.Eternal + Player5.Eternal + Player6.Eternal;
             int totalMythic = Player1.Mythic + Player2.Mythic + Player3.Mythic + Player4.Mythic + Player5.Mythic + Player6.Mythic;
             LblTotalBag.Content = totalBag > 0 ? totalBag.ToString() : "";
-            LblTotalYellow.Content = totalYellow > 0 ? totalYellow.ToString() : "";
+            LblTotalGold.Content = totalGold > 0 ? totalGold.ToString() : "";
             LblTotalEternal.Content = totalEternal > 0 ? totalEternal.ToString() : "";
             LblTotalMythic.Content = totalMythic > 0 ? totalMythic.ToString() : "";
         }
@@ -195,7 +195,7 @@ namespace AionLootCounter
 
             List<string> lootNames = new List<string>();
             if (settings.ShowBag & settings.CopyBag) lootNames.Add("Bag");
-            lootNames.Add("Yellow");
+            lootNames.Add("Gold");
             lootNames.Add("Eternal");
             if (settings.ShowMythic & settings.CopyMythic) lootNames.Add("Mythic");
 
@@ -209,7 +209,7 @@ namespace AionLootCounter
 
             List<int> totalLoots = new List<int>();
             if (settings.ShowBag & settings.CopyBag) totalLoots.Add(Player1.Bag + Player2.Bag + Player3.Bag + Player4.Bag + Player5.Bag + Player6.Bag);
-            totalLoots.Add(Player1.Yellow + Player2.Yellow + Player3.Yellow + Player4.Yellow + Player5.Yellow + Player6.Yellow);
+            totalLoots.Add(Player1.Gold + Player2.Gold + Player3.Gold + Player4.Gold + Player5.Gold + Player6.Gold);
             totalLoots.Add(Player1.Eternal + Player2.Eternal + Player3.Eternal + Player4.Eternal + Player5.Eternal + Player6.Eternal);
             if (settings.ShowMythic & settings.CopyMythic) totalLoots.Add(Player1.Mythic + Player2.Mythic + Player3.Mythic + Player4.Mythic + Player5.Mythic + Player6.Mythic);
             playerLoots.Add("All loots " + string.Join("/", totalLoots));

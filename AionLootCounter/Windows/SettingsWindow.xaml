@@ -23,7 +23,7 @@
 
         <StackPanel Margin="10,35,10,50">
 
-            <Label HorizontalContentAlignment="Center" Padding="0" Content="Loot Counter v2.1" FontSize="10" Foreground="#FF7F7F7F" FontWeight="Bold"/>
+            <Label HorizontalContentAlignment="Center" Padding="0" Content="Loot Counter v2.2" FontSize="10" Foreground="#FF7F7F7F" FontWeight="Bold"/>
             <Label HorizontalContentAlignment="Center" Padding="0" Content="Made by Uuwulu of EuroAion" FontSize="10" Foreground="#FF7F7F7F" FontWeight="Bold"/>
             <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10">           
                 <Hyperlink NavigateUri="https://git.io/JJkBT" RequestNavigate="Hyperlink_RequestNavigate">

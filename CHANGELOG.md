@@ -16,3 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added settings
 - Added option to show/hide and copy Bag and Mythic
 - Added option to set visible number of Player Names
+
+## 2.2.0
+
+- Renamed 'Yellow' to 'Gold'

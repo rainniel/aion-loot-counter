@@ -22,7 +22,7 @@
         <SolidColorBrush x:Key="ButtonClickColor" Color="#C4E5F6"/>
 
         <SolidColorBrush x:Key="BagColor" Color="#4CCFFF"/>
-        <SolidColorBrush x:Key="YellowColor" Color="#F0B71C"/>
+        <SolidColorBrush x:Key="GoldColor" Color="#F0B71C"/>
         <SolidColorBrush x:Key="EternalColor" Color="#F08033"/>
         <SolidColorBrush x:Key="MythicColor" Color="#8F39CE"/>
 
