@@ -50,6 +50,20 @@ namespace AionLootCounter
             if (Player5.Visibility != Visibility.Visible) Player5.Clear();
             if (Player6.Visibility != Visibility.Visible) Player6.Clear();
 
+            string playerNames = Player1.PlayerName + Player2.PlayerName + Player3.PlayerName + Player4.PlayerName + Player5.PlayerName + Player6.PlayerName;
+
+            if (string.IsNullOrEmpty(playerNames)) ShowMe();
+            else if (playerNames.Equals("ME", StringComparison.OrdinalIgnoreCase))
+            {
+                Player1.Clear();
+                Player2.Clear();
+                Player3.Clear();
+                Player4.Clear();
+                Player5.Clear();
+                Player6.Clear();
+                ShowMe();
+            }
+
             Player1.ShowBag = settings.ShowBag;
             Player2.ShowBag = settings.ShowBag;
             Player3.ShowBag = settings.ShowBag;

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace AionLootCounter.Windows
 {
@@ -26,6 +27,19 @@ namespace AionLootCounter.Windows
 
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if (e.Key == Key.Enter)
+            {
+                DialogResult = true;
+                Close();
+            }
+        }
+
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -46,6 +60,7 @@ namespace AionLootCounter.Windows
         {
             Close();
         }
+
 
     }
 

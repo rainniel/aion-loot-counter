@@ -42,6 +42,18 @@ namespace AionLootCounter.Windows
             Close();
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if (e.Key == Key.Enter)
+            {
+                BtnSave_Click(sender, e);
+            }
+        }
+
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));

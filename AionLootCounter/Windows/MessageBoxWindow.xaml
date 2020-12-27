@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AionLootCounter.Windows"
         mc:Ignorable="d"
-        Title="" Height="120" Width="280" WindowStartupLocation="CenterOwner" WindowStyle="None" Background="#d9d9d9" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="" Height="120" Width="280" WindowStartupLocation="CenterOwner" WindowStyle="None" Background="#d9d9d9" ResizeMode="NoResize" ShowInTaskbar="False" KeyDown="Window_KeyDown">
     <Grid Margin="1" Background="White">
 
         <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left" Height="20">

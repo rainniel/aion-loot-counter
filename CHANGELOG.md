@@ -20,3 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 2.2.0
 
 - Renamed 'Yellow' to 'Gold'
+
+## 2.3.0
+
+- Added key press response to 'Esc' and 'Enter' in modal window, 'Esc' is equal to closing the window and 'Enter' is equal to clicking the OK button

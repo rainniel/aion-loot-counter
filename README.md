@@ -1,4 +1,4 @@
-## aion-loot-counter v2.2
+## aion-loot-counter v2.3
 
 Loot counter for group instance specifically designed for Sauro Supply Base (Aion 4.6) but can be useful too for other instances.
 
@@ -15,9 +15,9 @@ Loot counter for group instance specifically designed for Sauro Supply Base (Aio
 - Aion must be in window mode
 - This loot counter does not read chat log, you have to manually count the loots in app
 
-**What's new in version 2.2:**
+**What's new in version 2.3:**
 
-- Renamed 'Yellow' to 'Gold'
+- Added key press response to 'Esc' and 'Enter' in modal window, 'Esc' is equal to closing the window and 'Enter' is equal to clicking the OK button
 
 Made by Uuwulu of EuroAion
 
