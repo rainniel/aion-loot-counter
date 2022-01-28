@@ -79,13 +79,13 @@ namespace AionLootCounter
         private void TbxItem_PreviewKeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Up || e.Key == Key.Down)
+            if (e.Key == Key.Up || e.Key == Key.Down || e.Key == Key.W || e.Key == Key.S)
             {
 
                 TextBox tbx = (TextBox)sender;
                 int val = itemValues[tbx.Name];
 
-                if (e.Key == Key.Up) val++;
+                if (e.Key == Key.Up || e.Key == Key.W) val++;
                 else val--;
 
                 if (val < 0) val = 0;
