@@ -1,26 +1,25 @@
-﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
+﻿using AionLootCounter.Utils;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace AionLootCounter.Windows
 {
-
     public partial class SettingsWindow : Window
     {
-
-        private bool updating;
-        private int groupMembers;
-        private int originalGroupMembers;
-
+        private readonly int originalGroupMembers;
         public AppSettings Settings;
 
         public SettingsWindow(AppSettings settings)
         {
-
             InitializeComponent();
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            LblAppNameVersion.Content = string.Format("{0} v{1}", fvi.ProductName, fvi.ProductVersion);
+
             if (settings == null) settings = new AppSettings();
 
             ChkShowBag.IsChecked = settings.ShowBag;
@@ -31,10 +30,7 @@ namespace AionLootCounter.Windows
             ChkCopyMythic.IsEnabled = settings.ShowMythic;
 
             originalGroupMembers = settings.GroupMembers;
-
-            TbxGroupMembers.Text = settings.GroupMembers.ToString();
-            groupMembers = settings.GroupMembers;
-
+            TbxGroupMembers.Value = settings.GroupMembers;
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -44,14 +40,8 @@ namespace AionLootCounter.Windows
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                Close();
-            }
-            else if (e.Key == Key.Enter)
-            {
-                BtnSave_Click(sender, e);
-            }
+            if (e.Key == Key.Escape) Close();
+            else if (e.Key == Key.Enter) BtnSave_Click(sender, e);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -70,57 +60,9 @@ namespace AionLootCounter.Windows
             ChkCopyMythic.IsEnabled = (bool)ChkShowMythic.IsChecked;
         }
 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void TbxGroupMembers_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (e.Command == ApplicationCommands.Copy || e.Command == ApplicationCommands.Cut || e.Command == ApplicationCommands.Paste)
-                e.Handled = true;
-        }
-
-        private void TbxGroupMembers_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Up || e.Key == Key.Down)
-            {
-                TextBox tbx = (TextBox)sender;
-                int val = groupMembers;
-
-                if (e.Key == Key.Up) val++;
-                else val--;
-
-                if (val < 2) val = 2;
-                if (val > 6) val = 6;
-                groupMembers = val;
-
-                updating = true;
-                if (val > 0)
-                {
-                    tbx.Text = val.ToString();
-                    tbx.SelectionStart = tbx.Text.Length;
-                }
-                else tbx.Clear();
-                updating = false;
-            }
-        }
-
-        private void TbxGroupMembers_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!updating)
-            {
-                TextBox tbx = (TextBox)sender;
-                int.TryParse(tbx.Text, out int val);
-                groupMembers = val;
-            }
-        }
-
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-
-            int tmpGroupMembers = Helper.GetInt(TbxGroupMembers.Text);
+            var tmpGroupMembers = (byte)TbxGroupMembers.Value;
             if (tmpGroupMembers < 2)
             {
                 new MessageBoxWindow(this, "The minimum group members is 2.", "Input Error", MessageBoxButton.OK).ShowDialog();
@@ -138,12 +80,14 @@ namespace AionLootCounter.Windows
                     return;
             }
 
-            Settings = new AppSettings();
-            Settings.ShowBag = (bool)ChkShowBag.IsChecked;
-            Settings.CopyBag = (bool)ChkCopyBag.IsChecked;
-            Settings.ShowMythic = (bool)ChkShowMythic.IsChecked;
-            Settings.CopyMythic = (bool)ChkCopyMythic.IsChecked;
-            Settings.GroupMembers = tmpGroupMembers;
+            Settings = new AppSettings
+            {
+                ShowBag = (bool)ChkShowBag.IsChecked,
+                CopyBag = (bool)ChkCopyBag.IsChecked,
+                ShowMythic = (bool)ChkShowMythic.IsChecked,
+                CopyMythic = (bool)ChkCopyMythic.IsChecked,
+                GroupMembers = tmpGroupMembers
+            };
 
             DialogResult = true;
             Close();
@@ -153,7 +97,5 @@ namespace AionLootCounter.Windows
         {
             Close();
         }
-
     }
-
 }

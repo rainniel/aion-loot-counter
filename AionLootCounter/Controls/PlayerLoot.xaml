@@ -1,0 +1,16 @@
+﻿<UserControl
+    x:Class="AionLootCounter.Controls.PlayerLoot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Controls="clr-namespace:AionLootCounter.Controls"
+    mc:Ignorable="d" Height="30">
+    <StackPanel Orientation="Horizontal" Margin="3">
+        <TextBox x:Name="TbxName" Width="100" MaxLength="16" VerticalContentAlignment="Center" TextChanged="TbxName_TextChanged" LostFocus="TbxName_LostFocus" KeyDown="TbxName_KeyDown" />
+        <Controls:LootTextBox x:Name="TbxBag" Width="40" Margin="5 0 0 0" Color="{DynamicResource ResourceKey=BagColor}" IsEnabled="False" ValueChanged="Loot_ValueChanged" KeyDown="TbxBag_KeyDown" />
+        <Controls:LootTextBox x:Name="TbxGold" Width="40" Margin="5 0 0 0" Color="{DynamicResource ResourceKey=GoldColor}" IsEnabled="False" ValueChanged="Loot_ValueChanged" KeyDown="TbxGold_KeyDown" />
+        <Controls:LootTextBox x:Name="TbxEternal" Width="40" Margin="5 0 0 0" Color="{DynamicResource ResourceKey=EternalColor}" IsEnabled="False" ValueChanged="Loot_ValueChanged" KeyDown="TbxEternal_KeyDown" />
+        <Controls:LootTextBox x:Name="TbxMythic" Width="40" Margin="5 0 0 0" Color="{DynamicResource ResourceKey=MythicColor}" IsEnabled="False" ValueChanged="Loot_ValueChanged" KeyDown="TbxMythic_KeyDown" />
+    </StackPanel>
+</UserControl>

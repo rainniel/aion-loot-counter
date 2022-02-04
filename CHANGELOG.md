@@ -28,3 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 2.3.1
 
 - [W] and [S] key can now increase/decrease the number of loots
+
+## 2.4.0
+
+- Refactored
