@@ -46,6 +46,8 @@ namespace AionLootCounter.Controls
                 }
                 else TbxNumber.Clear();
                 textUpdating = false;
+
+                ValueChanged?.Invoke(this, e);
             }
         }
 
