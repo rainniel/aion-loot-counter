@@ -65,18 +65,18 @@ namespace AionLootCounter.Windows
             var tmpGroupMembers = (byte)TbxGroupMembers.Value;
             if (tmpGroupMembers < 2)
             {
-                new MessageBoxWindow(this, "The minimum group members is 2.", "Input Error", MessageBoxButton.OK).ShowDialog();
+                this.MessageBox("The minimum group members is 2.", "Input Error", MessageBoxButton.OK);
                 return;
             }
             if (tmpGroupMembers > 6)
             {
-                new MessageBoxWindow(this, "The maximum group members is 6.", "Input Error", MessageBoxButton.OK).ShowDialog();
+                this.MessageBox("The maximum group members is 6.", "Input Error", MessageBoxButton.OK);
                 return;
             }
 
             if (tmpGroupMembers < originalGroupMembers)
             {
-                if (new MessageBoxWindow(this, "Your input group members is lower than the original, the last name row(s) will be removed, do you want to continue?", "", MessageBoxButton.YesNo).ShowDialog() != true)
+                if (!this.MessageBox("Your input group members is lower than the original, the last name row(s) will be removed, do you want to continue?", MessageBoxButton.YesNo))
                     return;
             }
 

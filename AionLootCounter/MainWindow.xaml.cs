@@ -3,6 +3,7 @@ using AionLootCounter.Utils;
 using AionLootCounter.Windows;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -41,6 +42,13 @@ namespace AionLootCounter
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            LblWindowTitle.Focusable = true;
+            LblWindowTitle.Focus();
+            LblWindowTitle.Focusable = false;
         }
 
         private void BtnPin_Click(object sender, RoutedEventArgs e)
@@ -107,37 +115,22 @@ namespace AionLootCounter
             LblTotalMythic.Content = totalMythic > 0 ? totalMythic.ToString() : "";
         }
 
-        private void BtnCopyText_Click(object sender, RoutedEventArgs e)
+        private void BtnCopyLoot_Click(object sender, RoutedEventArgs e)
         {
-            List<string> lootNames = new List<string>();
-            if (settings.ShowBag & settings.CopyBag) lootNames.Add("Bag");
-            lootNames.Add("Gold");
-            lootNames.Add("Eternal");
-            if (settings.ShowMythic & settings.CopyMythic) lootNames.Add("Mythic");
-
-            List<string> playerLoots = new List<string>();
-            if (Player1.Include) playerLoots.Add(Player1.LootText);
-            if (Player2.Include) playerLoots.Add(Player2.LootText);
-            if (Player3.Include) playerLoots.Add(Player3.LootText);
-            if (Player4.Include) playerLoots.Add(Player4.LootText);
-            if (Player5.Include) playerLoots.Add(Player5.LootText);
-            if (Player6.Include) playerLoots.Add(Player6.LootText);
-
-            List<int> totalLoots = new List<int>();
-            if (settings.ShowBag & settings.CopyBag) totalLoots.Add(Player1.Bag + Player2.Bag + Player3.Bag + Player4.Bag + Player5.Bag + Player6.Bag);
-            totalLoots.Add(Player1.Gold + Player2.Gold + Player3.Gold + Player4.Gold + Player5.Gold + Player6.Gold);
-            totalLoots.Add(Player1.Eternal + Player2.Eternal + Player3.Eternal + Player4.Eternal + Player5.Eternal + Player6.Eternal);
-            if (settings.ShowMythic & settings.CopyMythic) totalLoots.Add(Player1.Mythic + Player2.Mythic + Player3.Mythic + Player4.Mythic + Player5.Mythic + Player6.Mythic);
-            playerLoots.Add("All loots " + string.Join("/", totalLoots));
-
             Clipboard.Clear();
-            Clipboard.SetText(string.Format("Loots {0}: {1}", string.Join("/", lootNames), string.Join(", ", playerLoots)));
+            Clipboard.SetText(GetAllLoots());
+        }
+
+        private void BtnCopyRoll_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText(GetNextRoll());
         }
 
         private void BtnClearAll_Click(object sender, RoutedEventArgs e)
         {
             lockOpacity = true;
-            if (new MessageBoxWindow(this, "Clear all values?", "", MessageBoxButton.YesNo).ShowDialog() == true)
+            if (this.MessageBox("Clear all values?", MessageBoxButton.YesNo))
             {
                 Player1.Clear();
                 Player2.Clear();
@@ -225,11 +218,11 @@ namespace AionLootCounter
                     i--;
                     if (string.IsNullOrWhiteSpace(playerLootControlList[i].PlayerName))
                     {
-                        playerLootControlList[i].PlayerName = "ME";
+                        playerLootControlList[i].PlayerName = "Me";
                     }
                     break;
                 }
-                else if (playerLootControlList[i].PlayerName.Equals("ME", StringComparison.OrdinalIgnoreCase))
+                else if (playerLootControlList[i].PlayerName.Equals("Me", StringComparison.OrdinalIgnoreCase))
                 {
                     break;
                 }
@@ -237,12 +230,147 @@ namespace AionLootCounter
                 {
                     if (string.IsNullOrWhiteSpace(playerLootControlList[i].PlayerName))
                     {
-                        playerLootControlList[i].PlayerName = "ME";
+                        playerLootControlList[i].PlayerName = "Me";
                     }
                 }
             }
         }
 
+        private string GetAllLoots()
+        {
+            List<string> lootNames = new List<string>();
+            if (settings.ShowBag & settings.CopyBag) lootNames.Add("Bag");
+            lootNames.Add("Gold");
+            lootNames.Add("Eternal");
+            if (settings.ShowMythic & settings.CopyMythic) lootNames.Add("Mythic");
+
+            List<string> playerLoots = new List<string>();
+            if (Player1.Include) playerLoots.Add(Player1.LootText);
+            if (Player2.Include) playerLoots.Add(Player2.LootText);
+            if (Player3.Include) playerLoots.Add(Player3.LootText);
+            if (Player4.Include) playerLoots.Add(Player4.LootText);
+            if (Player5.Include) playerLoots.Add(Player5.LootText);
+            if (Player6.Include) playerLoots.Add(Player6.LootText);
+
+            List<int> totalLoots = new List<int>();
+            if (settings.ShowBag & settings.CopyBag) totalLoots.Add(Player1.Bag + Player2.Bag + Player3.Bag + Player4.Bag + Player5.Bag + Player6.Bag);
+            totalLoots.Add(Player1.Gold + Player2.Gold + Player3.Gold + Player4.Gold + Player5.Gold + Player6.Gold);
+            totalLoots.Add(Player1.Eternal + Player2.Eternal + Player3.Eternal + Player4.Eternal + Player5.Eternal + Player6.Eternal);
+            if (settings.ShowMythic & settings.CopyMythic) totalLoots.Add(Player1.Mythic + Player2.Mythic + Player3.Mythic + Player4.Mythic + Player5.Mythic + Player6.Mythic);
+            playerLoots.Add("All loots " + string.Join("/", totalLoots));
+
+            return string.Format("Loots [where:{0}]: {1}", string.Join("/", lootNames), string.Join(", ", playerLoots));
+        }
+
+        private string GetNextRoll()
+        {
+            var rollList = new List<string>();
+            List<Tuple<int, string>> playerLoots;
+
+            if (settings.ShowBag & settings.CopyBag)
+            {
+                playerLoots = new List<Tuple<int, string>>();
+                if (Player1.Include) playerLoots.Add(new Tuple<int, string>(Player1.Bag, Player1.PlayerName));
+                if (Player2.Include) playerLoots.Add(new Tuple<int, string>(Player2.Bag, Player2.PlayerName));
+                if (Player3.Include) playerLoots.Add(new Tuple<int, string>(Player3.Bag, Player3.PlayerName));
+                if (Player4.Include) playerLoots.Add(new Tuple<int, string>(Player4.Bag, Player4.PlayerName));
+                if (Player5.Include) playerLoots.Add(new Tuple<int, string>(Player5.Bag, Player5.PlayerName));
+                if (Player6.Include) playerLoots.Add(new Tuple<int, string>(Player6.Bag, Player6.PlayerName));
+                rollList.Add(string.Format("[where:Bag] {0}", NextLoot(playerLoots)));
+            }
+
+            playerLoots = new List<Tuple<int, string>>();
+            if (Player1.Include) playerLoots.Add(new Tuple<int, string>(Player1.Gold, Player1.PlayerName));
+            if (Player2.Include) playerLoots.Add(new Tuple<int, string>(Player2.Gold, Player2.PlayerName));
+            if (Player3.Include) playerLoots.Add(new Tuple<int, string>(Player3.Gold, Player3.PlayerName));
+            if (Player4.Include) playerLoots.Add(new Tuple<int, string>(Player4.Gold, Player4.PlayerName));
+            if (Player5.Include) playerLoots.Add(new Tuple<int, string>(Player5.Gold, Player5.PlayerName));
+            if (Player6.Include) playerLoots.Add(new Tuple<int, string>(Player6.Gold, Player6.PlayerName));
+            rollList.Add(string.Format("[where:Gold] {0}", NextLoot(playerLoots)));
+
+            playerLoots = new List<Tuple<int, string>>();
+            if (Player1.Include) playerLoots.Add(new Tuple<int, string>(Player1.Eternal, Player1.PlayerName));
+            if (Player2.Include) playerLoots.Add(new Tuple<int, string>(Player2.Eternal, Player2.PlayerName));
+            if (Player3.Include) playerLoots.Add(new Tuple<int, string>(Player3.Eternal, Player3.PlayerName));
+            if (Player4.Include) playerLoots.Add(new Tuple<int, string>(Player4.Eternal, Player4.PlayerName));
+            if (Player5.Include) playerLoots.Add(new Tuple<int, string>(Player5.Eternal, Player5.PlayerName));
+            if (Player6.Include) playerLoots.Add(new Tuple<int, string>(Player6.Eternal, Player6.PlayerName));
+            rollList.Add(string.Format("[where:Eternal] {0}", NextLoot(playerLoots)));
+
+            if (settings.ShowMythic & settings.CopyMythic)
+            {
+                playerLoots = new List<Tuple<int, string>>();
+                if (Player1.Include) playerLoots.Add(new Tuple<int, string>(Player1.Mythic, Player1.PlayerName));
+                if (Player2.Include) playerLoots.Add(new Tuple<int, string>(Player2.Mythic, Player2.PlayerName));
+                if (Player3.Include) playerLoots.Add(new Tuple<int, string>(Player3.Mythic, Player3.PlayerName));
+                if (Player4.Include) playerLoots.Add(new Tuple<int, string>(Player4.Mythic, Player4.PlayerName));
+                if (Player5.Include) playerLoots.Add(new Tuple<int, string>(Player5.Mythic, Player5.PlayerName));
+                if (Player6.Include) playerLoots.Add(new Tuple<int, string>(Player6.Mythic, Player6.PlayerName));
+                rollList.Add(string.Format("[where:Mythic] {0}", NextLoot(playerLoots)));
+            }
+
+            return string.Format("Next Roll: {0}", string.Join(", ", rollList));
+        }
+
+        private string NextLoot(List<Tuple<int, string>> items)
+        {
+            if (items.Count > 1)
+            {
+                if (items.Sum(i => i.Item1) > 0)
+                {
+                    var allEqual = true;
+                    for (var i = 1; i < items.Count; i++)
+                    {
+                        if (items[i - 1].Item1 != items[i].Item1)
+                        {
+                            allEqual = false;
+                            break;
+                        }
+                    }
+
+                    if (!allEqual)
+                    {
+                        items = items.OrderByDescending(i => i.Item1).ToList();
+
+                        var eliminate = true;
+
+                        var oopsLoops = 0;
+                        while (eliminate)
+                        {
+                            if (items.Count > 1)
+                            {
+                                allEqual = true;
+                                for (var i = 1; i < items.Count; i++)
+                                {
+                                    if (items[i - 1].Item1 != items[i].Item1)
+                                    {
+                                        allEqual = false;
+                                        items.RemoveAt(i - 1);
+                                        break;
+                                    }
+                                }
+
+                                if (allEqual) eliminate = false;
+                            }
+                            else eliminate = false;
+
+                            oopsLoops++;
+                            if (oopsLoops >= 100) break;
+                        }
+
+                        var names = items.Select(i => i.Item2).ToList();
+                        for (var i = 0; i < names.Count(); i++)
+                        {
+                            names[i] = string.Format("[kvalue:1;{0};str]", names[i]);
+                        }
+                        return string.Join(" ", names);
+                    }
+                }
+            }
+            return "[kvalue:1;All;str]";
+        }
+
         #endregion
+
     }
 }

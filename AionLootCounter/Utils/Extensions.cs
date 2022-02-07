@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using AionLootCounter.Windows;
+using System.Globalization;
+using System.Windows;
 
 namespace AionLootCounter.Utils
 {
@@ -21,6 +23,16 @@ namespace AionLootCounter.Utils
         {
             byte.TryParse(str, out byte output);
             return output;
+        }
+
+        public static bool MessageBox(this Window window, string message, MessageBoxButton button)
+        {
+            return new MessageBoxWindow(window, message, "", button).ShowDialog() == true;
+        }
+
+        public static bool MessageBox(this Window window, string message, string title, MessageBoxButton button)
+        {
+            return new MessageBoxWindow(window, message, title, button).ShowDialog() == true;
         }
     }
 }

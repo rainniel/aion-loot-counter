@@ -15,7 +15,8 @@
     Background="{StaticResource WindowBorderColor}"
     MouseDown="Window_MouseDown"
     MouseEnter="Window_MouseEnter"
-    MouseLeave="Window_MouseLeave">
+    MouseLeave="Window_MouseLeave"
+    Deactivated="Window_Deactivated">
     <Grid Margin="1" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -30,21 +31,21 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="Loot Counter" Padding="5 2 0 0" FontWeight="Bold"/>
+            <Label x:Name="LblWindowTitle" Grid.Column="0" Content="Loot Counter" Padding="5 2 0 0" FontWeight="Bold"/>
 
-            <DockPanel Grid.Column="2"  Margin="0,0,1,0">
+            <DockPanel Grid.Column="2"  Margin="0 0 1 0">
                 <Button x:Name="BtnPin" Style="{StaticResource WindowButtonStyle}" Click="BtnPin_Click">
                     <Button.ToolTip>
                         <TextBlock><Run Text="Pin/Unpin window on top of the screen"/></TextBlock>
                     </Button.ToolTip>
-                    <Path x:Name="PthPin" Stretch="Fill" Margin="4, 3" Fill="Black" Data="{StaticResource PinGeometry}"/>
+                    <Path x:Name="PthPin" Stretch="Fill" Margin="4 3" Fill="Black" Data="{StaticResource PinGeometry}"/>
                 </Button>
 
                 <Button x:Name="BtnMinimize" Style="{StaticResource WindowButtonStyle}" Click="BtnMinimize_Click">
                     <Button.ToolTip>
                         <TextBlock><Run Text="Minimize"/></TextBlock>
                     </Button.ToolTip>
-                    <Path Stretch="Fill" Margin="4, 7" Fill="Black" Data="{StaticResource MinimizeGeometry}"/>
+                    <Path Stretch="Fill" Margin="4 7" Fill="Black" Data="{StaticResource MinimizeGeometry}"/>
                 </Button>
 
                 <Button x:Name="BtnClose" Style="{StaticResource WindowButtonStyle}" Click="BtnClose_Click">
@@ -57,32 +58,34 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="8 8 8 0">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="3 0 3 0">
-                    <Label Content="Name" Width="100" />
-                    <Label x:Name="LblBag" Content="Bag" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
-                    <Label Content="Gold" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
-                    <Label Content="Eternal" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
-                    <Label x:Name="LblMythic" Content="Mythic" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
-                </StackPanel>
-
+            <Grid HorizontalAlignment="Center">
                 <StackPanel>
-                    <Controls:PlayerLoot x:Name="Player1" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
-                    <Controls:PlayerLoot x:Name="Player2" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
-                    <Controls:PlayerLoot x:Name="Player3" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
-                    <Controls:PlayerLoot x:Name="Player4" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
-                    <Controls:PlayerLoot x:Name="Player5" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
-                    <Controls:PlayerLoot x:Name="Player6" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3 0 3 0">
+                        <Label Content="Name" Width="100" />
+                        <Label x:Name="LblBag" Content="Bag" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
+                        <Label Content="Gold" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
+                        <Label Content="Eternal" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
+                        <Label x:Name="LblMythic" Content="Mythic" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" />
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="3 0 3 0">
-                    <Label Content="Total" HorizontalContentAlignment="Right" Width="100" FontWeight="Bold" />
-                    <Label x:Name="LblTotalBag" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=BagColor}" />
-                    <Label x:Name="LblTotalGold" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=GoldColor}" />
-                    <Label x:Name="LblTotalEternal" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=EternalColor}" />
-                    <Label x:Name="LblTotalMythic" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=MythicColor}" />
+                    <StackPanel>
+                        <Controls:PlayerLoot x:Name="Player1" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
+                        <Controls:PlayerLoot x:Name="Player2" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
+                        <Controls:PlayerLoot x:Name="Player3" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
+                        <Controls:PlayerLoot x:Name="Player4" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
+                        <Controls:PlayerLoot x:Name="Player5" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
+                        <Controls:PlayerLoot x:Name="Player6" Height="30" EnterPressed="PlayerLoot_EnterPressed" ValueChanged="PlayerLoot_ValueChanged" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="3 0 3 0">
+                        <Label Content="Total" HorizontalContentAlignment="Right" Width="100" FontWeight="Bold" />
+                        <Label x:Name="LblTotalBag" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=BagColor}" />
+                        <Label x:Name="LblTotalGold" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=GoldColor}" />
+                        <Label x:Name="LblTotalEternal" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=EternalColor}" />
+                        <Label x:Name="LblTotalMythic" Width="40" Margin="5 0 0 0" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource ResourceKey=MythicColor}" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="2">
@@ -92,12 +95,19 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <DockPanel Grid.Column="0"  Margin="8">
-                <Button x:Name="BtnCopyText" Style="{StaticResource UIButtonStyle}" Content="Copy Text" Width="100" Click="BtnCopyText_Click"/>
-            </DockPanel>
+            <Grid Grid.Column="0" Margin="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="BtnCopyLoot" Grid.Column="0" Style="{StaticResource UIButtonStyle}" Content="Copy Loots" Width="80" Click="BtnCopyLoot_Click" />
+                <Button x:Name="BtnCopyRoll" Grid.Column="2" Style="{StaticResource UIButtonStyle}" Content="Copy Rolls" Width="80" Click="BtnCopyRoll_Click" />
+            </Grid>
 
             <DockPanel Grid.Column="2" Margin="8">
-                <Button x:Name="BtnClearAll" Style="{StaticResource UIImageButtonStyle}" Click="BtnClearAll_Click" Margin="0,0,2,0">
+                <Button x:Name="BtnClearAll" Style="{StaticResource UIImageButtonStyle}" Click="BtnClearAll_Click" Margin="0 0 2 0">
                     <Button.ToolTip>
                         <TextBlock><Run Text="Clear all"/></TextBlock>
                     </Button.ToolTip>

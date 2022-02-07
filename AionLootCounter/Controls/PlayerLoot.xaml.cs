@@ -172,7 +172,7 @@ namespace AionLootCounter.Controls
         {
             get
             {
-                string output = string.Format("[{0}] ", PlayerName);
+                string output = string.Format("[kvalue:1;{0};str] ", PlayerName);
                 if (HasLoot)
                 {
                     List<int> loots = new List<int>();
