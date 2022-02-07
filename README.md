@@ -1,4 +1,4 @@
-## Aion Loot Counter v2.4.0
+## Aion Loot Counter v2.5.0
 
 Loot counter for group instance specifically designed for Sauro Supply Base (Aion 4.6) but can be useful too for other instances.
 
